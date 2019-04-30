@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from math import ceil, floor
+from time import time
 
 def plot_single_image(image, label):
     plt.axis('off')
@@ -17,7 +18,8 @@ def plot_image_array(image_array, label_array, columns_number=4, figure_size=(15
     gs = fig.add_gridspec(rows_number, columns_number)
     gs.update(hspace = 0.5, wspace=0.05)
     print("Plotting " + str(images_count) + " images...")
-    print('0%                100%')
+    print('0%                100%')   
+    start = time()
     print_step = floor(images_count / 20)
     current_step = print_step
     for i in range(images_count):
@@ -28,5 +30,6 @@ def plot_image_array(image_array, label_array, columns_number=4, figure_size=(15
         xi = i % columns_number
         fig.add_subplot(gs[yi, xi])
         plot_single_image(image_array[i], label_array[i])
-    print('\nPlotted ' + str(images_count) + ' images in ' + str(rows_number) + ' rows / ' + str(columns_number) + ' columns.')
+    stop = time()
+    print('\nPlotted ' + str(images_count) + ' images in ' + "{0:.3f}".format(stop - start) + ' sec.')
     plt.show()
