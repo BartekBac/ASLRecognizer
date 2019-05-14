@@ -2,8 +2,8 @@ import os
 import cv2
 from time import time
 from math import floor
-
-root_data_dir = 'c:/rep/VI sem/BIAI/data'
+import tensorflow as tf
+root_data_dir = '/home/martyna/Studia/biai'
 test_data_dir = root_data_dir + '/asl_alphabet_test'
 train_data_dir = root_data_dir + '/asl_alphabet_train'
 def load_test_data():
@@ -46,6 +46,8 @@ def load_train_data(limit_for_single_letter=3000):
             image = cv2.imread(file_path)
             image = cv2.resize(image, destination_image_size)
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image = tf.cast(image, tf.float32)
+            image = tf.reshape(image, shape=[-1, 64,64,3])
             label = letter
             images_to_return.append(image)
             labels_to_return.append(label)
@@ -56,4 +58,3 @@ def load_train_data(limit_for_single_letter=3000):
     print('=======================================')
     print('Fetched ' + str(29 * limit_for_single_letter) + ' files in ' +  "{0:.3f}".format(global_stop - global_start) + ' sec.')
     return images_to_return, labels_to_return
-    
