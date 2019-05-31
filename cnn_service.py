@@ -9,7 +9,7 @@ def conv2d(inputs, filter, strides, padding='SAME'):
                     padding = padding
             ))
                    
-def max_pool(inputs, ksize=[1,2,2,1], strides=[1,1,1,1], padding='SAME'):
+def max_pool(inputs, ksize=[1,2,2,1], strides=[1,2,2,1], padding='SAME'): #strides zmienione z [1,1,1,1] na [1,2,2,1]
     return tf.nn.max_pool(
             value = inputs,
             ksize = ksize,
