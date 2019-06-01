@@ -6,7 +6,7 @@ from math import floor
 import tensorflow as tf
 import numpy as np
 
-root_data_dir = 'C:/rep/VI sem/BIAI/data'
+root_data_dir = '/home/martyna/Studia/biai'
 test_data_dir = root_data_dir + '/asl_alphabet_test'
 train_data_dir = root_data_dir + '/asl_alphabet_train'
 classes_count = 29
