@@ -5,8 +5,8 @@ from time import time
 from math import floor
 import tensorflow as tf
 import numpy as np
-
-root_data_dir = '/home/martyna/Studia/biai'
+root_data_dir = "C:/rep/VI sem/BIAI/data"
+#root_data_dir = '/home/martyna/Studia/biai'
 test_data_dir = root_data_dir + '/asl_alphabet_test'
 train_data_dir = root_data_dir + '/asl_alphabet_train'
 classes_count = 29
@@ -23,8 +23,8 @@ def load_test_data():
         image = cv2.imread(file_path)
         image = cv2.resize(image, destination_image_size)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        #image = tf.cast(image, tf.float32)
-        #image = tf.reshape(image, shape=[-1, 64,64,3])
+        image = tf.cast(image, tf.float32)
+        image = tf.reshape(image, shape=[-1, 64,64,3])
         label = file
         label = label[:-9]
         images_to_return.append(image)
