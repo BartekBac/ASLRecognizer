@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 from math import ceil, floor
 from time import time
+from datetime import datetime
 
 def plot_single_image(image, label):
     plt.axis('off')
@@ -33,3 +34,15 @@ def plot_image_array(image_array, label_array, columns_number=4, figure_size=(15
     stop = time()
     print('\nPlotted ' + str(images_count) + ' images in ' + "{0:.3f}".format(stop - start) + ' sec.')
     plt.show()
+
+def time_format(timestamp, format_type='datetime'):
+    date_time = datetime.fromtimestamp(timestamp)
+    if format_type == 'date' or format_type == 'd':
+        return date_time.strftime("%Y-%m-%d")
+    elif format_type == 'time' or format_type == 't':
+        return date_time.strftime("%H:%M:%S")
+    else:
+        return date_time.strftime("%Y-%m-%d %H:%M:%S")
+
+def time_interval(start, stop):
+    return "{0:.3f}".format(stop - start) + " sec."
