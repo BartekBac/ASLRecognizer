@@ -11,13 +11,13 @@ train_images, train_labels = ds.load_train_data_fixed(limit_for_single_letter=co
 test_images, test_labels = ds.load_test_data_fixed()
 # Parameters
 learning_rate = 0.001
-batch_size = 128
-learn_iterations =  5
-epoch_step = 1
+batch_size = 64
+learn_iterations =  500
+epoch_step = 50
 # Network Parameters
 classes_count = 29
 input_image_size = 64*64*3
-dropout = 0.1
+dropout = 0.2
 
 model_parameters = {
 'filter_c1': tf.Variable(tf.truncated_normal([3,3,3,32])),
