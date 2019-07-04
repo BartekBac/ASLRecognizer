@@ -12,7 +12,7 @@ test_images, test_labels = ds.load_test_data_fixed()
 # Parameters
 learning_rate = 0.001
 batch_size = 64
-learn_iterations =  500
+learn_iterations =  20
 epoch_step = 50
 # Network Parameters
 classes_count = 29
@@ -22,14 +22,12 @@ dropout = 0.2
 model_parameters = {
 'filter_c1': tf.Variable(tf.truncated_normal([3,3,3,32])),
 'filter_c2' : tf.Variable(tf.truncated_normal([3,3,32,64])),
-'filter_c3' : tf.Variable(tf.truncated_normal([3,3,64,64])),
 'weights_f' : tf.Variable(tf.truncated_normal([16*16*64, 1024])),
 'weights_l' : tf.Variable(tf.truncated_normal([1024, classes_count ])),
 'bias_l' :    tf.Variable(tf.truncated_normal([classes_count])),
 'bias_f' :    tf.Variable(tf.truncated_normal([1024])),
 'bias_c1' :   tf.Variable(tf.truncated_normal([32])),
-'bias_c2' :   tf.Variable(tf.truncated_normal([64])),
-'bias_c3' :   tf.Variable(tf.truncated_normal([64]))}
+'bias_c2' :   tf.Variable(tf.truncated_normal([64]))}
 
 
 # tf Graph input

@@ -29,9 +29,6 @@ def cnn_model(input_layer, param, dropout=0.75):
     conv2 = conv2d(pool1, param['bias_c2'], filter=param['filter_c2'], strides=[1,1,1,1])
     pool2 = max_pool(conv2)
 
-    #conv3 = conv2d(pool2, param['bias_c3'], filter = param['filter_c3'], strides=[1,1,1,1])
-   # pool3 = max_pool(conv3)
-
     fully_c = tf.reshape(pool2, [-1,16*16*64])
     fully_c = tf.nn.relu(
                 tf.add(
