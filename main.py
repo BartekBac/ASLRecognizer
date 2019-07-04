@@ -8,28 +8,26 @@ import numpy as np
 count_of_single_letter = 50
 
 train_images, train_labels = ds.load_train_data_fixed(limit_for_single_letter=count_of_single_letter)
-
+test_images, test_labels = ds.load_test_data_fixed()
 # Parameters
 learning_rate = 0.001
-batch_size = 128
-learn_iterations =  500
-epoch_step = 2
+batch_size = 64
+learn_iterations =  20
+epoch_step = 50
 # Network Parameters
 classes_count = 29
 input_image_size = 64*64*3
-dropout = 0.15
+dropout = 0.2
 
 model_parameters = {
-'filter_c1': tf.Variable(tf.random_normal([3,3,3,32])),
-'filter_c2' : tf.Variable(tf.random_normal([3,3,32,64])),
-'filter_c3' : tf.Variable(tf.random_normal([3,3,64,64])),
-'weights_f' : tf.Variable(tf.random_normal([8*8*64, 512])),
-'weights_l' :  tf.Variable(tf.random_normal([512, classes_count ])),
-'bias_l' : tf.Variable(tf.random_normal([classes_count])),
-'bias_f' :  tf.Variable(tf.random_normal([512])),
-'bias_c1' : tf.Variable(tf.random_normal([32])),
-'bias_c2' : tf.Variable(tf.random_normal([64])),
-'bias_c3' : tf.Variable(tf.random_normal([64]))}
+'filter_c1': tf.Variable(tf.truncated_normal([3,3,3,32])),
+'filter_c2' : tf.Variable(tf.truncated_normal([3,3,32,64])),
+'weights_f' : tf.Variable(tf.truncated_normal([16*16*64, 1024])),
+'weights_l' : tf.Variable(tf.truncated_normal([1024, classes_count ])),
+'bias_l' :    tf.Variable(tf.truncated_normal([classes_count])),
+'bias_f' :    tf.Variable(tf.truncated_normal([1024])),
+'bias_c1' :   tf.Variable(tf.truncated_normal([32])),
+'bias_c2' :   tf.Variable(tf.truncated_normal([64]))}
 
 
 # tf Graph input
@@ -61,7 +59,6 @@ accuracies = list()
 with tf.Session() as sess:
     sess.run(init)
     sess.run(init_local)
-
     
     step = 0
     epoch = 0
@@ -77,7 +74,7 @@ with tf.Session() as sess:
 
         # get random batch data
         random_images, random_labels = ds.get_random_batch(train_images, train_labels, batch_size)
-        
+            
         # optimize
         start_optimalization = time()
         sess.run(optimizer, feed_dict={x: random_images, y: random_labels, keep_probability: dropout})
@@ -88,11 +85,11 @@ with tf.Session() as sess:
         if step % epoch_step == 0:
             
             # get learn accuracy
-            acc = sess.run(accuracy, feed_dict={x: random_images, y: random_labels, keep_probability: dropout})
+            acc = sess.run(accuracy, feed_dict={x: test_images, y: test_labels, keep_probability: dropout})
             accuracies.append(acc)
             
             # get batch loss
-            batch_loss = sess.run(loss, feed_dict={x: random_images, y: random_labels, keep_probability: dropout})
+            batch_loss = sess.run(loss, feed_dict={x: test_images, y: test_labels, keep_probability: dropout})
             losses.append(batch_loss)
             
             # print epoch results
@@ -113,8 +110,8 @@ with tf.Session() as sess:
     print("######################################################")
     
     # do test run
-    test_size = min(400, train_images.shape[0])
-    test_X = train_images[0:test_size,:]
-    test_Y = train_labels[0:test_size,:]
+    #test_size = min(1, len(test_images))
+    #test_X = test_images[0:test_size]
+    #test_Y = test_labels[0:test_size]
     # Calculate accuracy 
-    print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: test_X, y: test_Y, keep_probability: dropout}))
+    print("Testing Accuracy:", sess.run(accuracy, feed_dict={x: test_images, y: test_labels, keep_probability: dropout}))

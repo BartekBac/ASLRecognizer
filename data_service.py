@@ -5,14 +5,38 @@ from time import time
 from math import floor
 import tensorflow as tf
 import numpy as np
-root_data_dir = "C:/rep/VI sem/BIAI/data"
-#root_data_dir = '/home/martyna/Studia/biai'
+#root_data_dir = "C:/rep/VI sem/BIAI/data"
+root_data_dir = '/home/martyna/Studia/biai'
 test_data_dir = root_data_dir + '/asl_alphabet_test'
 train_data_dir = root_data_dir + '/asl_alphabet_train'
 classes_count = 29
 letters_dictionary = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10,
                       'L':11,'M':12,'N':13,'O':14,'P':15,'Q':16,'R':17,'S':18,'T':19,'U':20,
                       'V':21,'W':22,'X':23,'Y':24,'Z':25,'space':26,'del':27,'nothing':28}
+
+
+def load_test_data_fixed():
+    
+    destination_image_size = 64,64
+    color_channel_count = 3
+    images_count = classes_count
+    single_image_size = destination_image_size[0] * destination_image_size [1] * color_channel_count
+    images_to_return = np.zeros([images_count,single_image_size])
+    labels_to_return = np.zeros([images_count,classes_count])
+    i = 0
+    for file in os.listdir(test_data_dir):
+        file_path = test_data_dir + '/' + file
+        image = cv2.imread(file_path)
+        image = cv2.resize(image, destination_image_size)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        images_to_return[i,:] = image.flatten()
+        label = file
+        label = label[:-9]
+        labels_to_return[i,:] = letter2vector(label)
+        i += 1
+
+    return images_to_return, labels_to_return
+
 
 def load_test_data():
     destination_image_size = 64,64 
