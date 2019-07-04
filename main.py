@@ -12,7 +12,7 @@ test_images, test_labels = ds.load_test_data_fixed()
 # Parameters
 learning_rate = 0.001
 batch_size = 64
-learn_iterations =  20
+learn_iterations =  500
 epoch_step = 50
 # Network Parameters
 classes_count = 29
